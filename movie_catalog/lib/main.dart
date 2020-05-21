@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:moviecatalog/pages/movies_page.dart';
 
-void main() {
+void main() async {
+  await GlobalConfiguration().loadFromAsset("local_properties");
   runApp(MyApp());
 }
 
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MoviesPage(title: 'Flutter Demo Home Page'),
+      home: MoviesPage(),
     );
   }
 }

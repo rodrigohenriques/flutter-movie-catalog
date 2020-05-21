@@ -1,10 +1,16 @@
-# moviecatalog
-
-Movie catalog
-
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project was built using Mobx.
+
+To be able to run this app you must create a file under `assets/cfg` name local_properties.json pretty much like this one:
+
+```json
+{
+  "apiKey": "<your api key>"
+}
+```
+
+## More about Flutter
 
 A few resources to get you started if this is your first Flutter project:
 
