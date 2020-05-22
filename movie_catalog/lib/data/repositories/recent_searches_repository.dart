@@ -16,7 +16,7 @@ class RecentSearchesRepository {
 
     var entries = searches.entries.toList();
 
-    entries.sort((a, b) => a.value - b.value);
+    entries.sort((a, b) => a.value > b.value ? -1 : 1);
 
     final recentQueries = entries.map((e) => e.key);
 
