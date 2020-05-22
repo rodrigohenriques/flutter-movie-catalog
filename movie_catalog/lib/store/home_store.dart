@@ -14,19 +14,6 @@ abstract class _HomeStore with Store {
   @observable
   bool isSearching = false;
 
-  @computed
-  IconData get actionIcon => isSearching ? Icons.cancel : Icons.search;
-
-  @computed
-  Function get actionPressed => isSearching ? cancelSearch : searchClick;
-
-  @computed
-  Widget get appBarAction =>
-      IconButton(
-        icon: Icon(actionIcon),
-        onPressed: actionPressed,
-      );
-
   @action
   void searchClick() {
     isSearching = true;

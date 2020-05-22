@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:mobx/mobx.dart';
 import 'package:moviecatalog/data/repositories/movie_repository.dart';
+import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
 import 'package:moviecatalog/model/http_error.dart';
 import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/model/search_result.dart';
@@ -10,7 +11,8 @@ part 'search_store.g.dart';
 class SearchStore = _SearchStore with _$SearchStore;
 
 abstract class _SearchStore with Store {
-  final _repository = MovieRepository();
+  final _movieRepository = MovieRepository();
+  final _recentSearchesRepository = RecentSearchesRepository();
   var _query = "";
   var _page = 1;
   int _totalPages;
@@ -26,6 +28,8 @@ abstract class _SearchStore with Store {
 
   @action
   Future<void> search(String query) async {
+    await _recentSearchesRepository.save(query);
+    
     Either<HttpError, SearchResult> result = await _search(query);
 
     this._totalPages =
@@ -54,7 +58,7 @@ abstract class _SearchStore with Store {
 
     this.isSearching = true;
 
-    final result = await _repository.search(query, page);
+    final result = await _movieRepository.search(query, page);
 
     this.isSearching = false;
 

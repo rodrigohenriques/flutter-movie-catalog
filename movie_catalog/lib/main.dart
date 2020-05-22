@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
-import 'package:moviecatalog/pages/home_page.dart';
 import 'package:moviecatalog/store/home_store.dart';
 import 'package:moviecatalog/store/search_store.dart';
+import 'package:moviecatalog/store/search_suggestions_store.dart';
+import 'package:moviecatalog/widgets/home_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
   runApp(
     MultiProvider(
       providers: [
-          Provider<HomeStore>(create: (context) => HomeStore()),
-          Provider<SearchStore>(create: (context) => SearchStore()),
+        Provider<HomeStore>(create: (context) => HomeStore()),
+        Provider<SearchStore>(create: (context) => SearchStore()),
+        Provider<SearchSuggestionsStore>(
+            create: (context) => SearchSuggestionsStore()),
       ],
       child: MyApp(),
     ),
@@ -28,7 +31,9 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Consumer<HomeStore>(
-        builder: (context, store, _) => HomePage(store: store),
+        builder: (context, store, _) => HomePage(
+          store: store,
+        ),
       ),
     );
   }

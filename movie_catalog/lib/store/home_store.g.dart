@@ -38,6 +38,17 @@ mixin _$HomeStore on _HomeStore, Store {
   }
 
   @override
+  void cancelSearch() {
+    final _$actionInfo = _$_HomeStoreActionController.startAction(
+        name: '_HomeStore.cancelSearch');
+    try {
+      return super.cancelSearch();
+    } finally {
+      _$_HomeStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 isSearching: ${isSearching}
