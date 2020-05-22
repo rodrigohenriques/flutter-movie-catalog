@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'search_movie_store.dart';
+part of 'search_store.dart';
 
 // **************************************************************************
 // StoreGenerator
@@ -8,16 +8,16 @@ part of 'search_movie_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$SearchMovieStore on _SearchMovieStore, Store {
+mixin _$SearchStore on _SearchStore, Store {
   Computed<bool> _$hasLoadMoreComputed;
 
   @override
   bool get hasLoadMore =>
       (_$hasLoadMoreComputed ??= Computed<bool>(() => super.hasLoadMore,
-              name: '_SearchMovieStore.hasLoadMore'))
+              name: '_SearchStore.hasLoadMore'))
           .value;
 
-  final _$moviesAtom = Atom(name: '_SearchMovieStore.movies');
+  final _$moviesAtom = Atom(name: '_SearchStore.movies');
 
   @override
   List<Movie> get movies {
@@ -32,7 +32,7 @@ mixin _$SearchMovieStore on _SearchMovieStore, Store {
     });
   }
 
-  final _$isSearchingAtom = Atom(name: '_SearchMovieStore.isSearching');
+  final _$isSearchingAtom = Atom(name: '_SearchStore.isSearching');
 
   @override
   bool get isSearching {
@@ -47,14 +47,14 @@ mixin _$SearchMovieStore on _SearchMovieStore, Store {
     });
   }
 
-  final _$searchAsyncAction = AsyncAction('_SearchMovieStore.search');
+  final _$searchAsyncAction = AsyncAction('_SearchStore.search');
 
   @override
   Future<void> search(String query) {
     return _$searchAsyncAction.run(() => super.search(query));
   }
 
-  final _$loadMoreAsyncAction = AsyncAction('_SearchMovieStore.loadMore');
+  final _$loadMoreAsyncAction = AsyncAction('_SearchStore.loadMore');
 
   @override
   Future<void> loadMore() {

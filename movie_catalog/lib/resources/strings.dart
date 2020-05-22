@@ -1,3 +1,3 @@
 class Strings {
-  static const moviePageTitle = "Movie Catalog";
+  static const homePageTitle = "Movie Catalog";
 }

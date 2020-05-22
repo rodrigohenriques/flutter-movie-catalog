@@ -5,11 +5,11 @@ import 'package:moviecatalog/model/http_error.dart';
 import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/model/search_result.dart';
 
-part 'search_movie_store.g.dart';
+part 'search_store.g.dart';
 
-class SearchMovieStore = _SearchMovieStore with _$SearchMovieStore;
+class SearchStore = _SearchStore with _$SearchStore;
 
-abstract class _SearchMovieStore with Store {
+abstract class _SearchStore with Store {
   final _repository = MovieRepository();
   var _query = "";
   var _page = 1;
