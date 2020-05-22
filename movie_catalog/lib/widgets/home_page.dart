@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/resources/strings.dart';
 import 'package:moviecatalog/store/home_store.dart';
 import 'package:moviecatalog/store/search_store.dart';
@@ -11,8 +10,7 @@ import 'package:provider/provider.dart';
 import 'favorites_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key, this.store})
-      : super(key: key);
+  const HomePage({Key key, this.store}) : super(key: key);
 
   final HomeStore store;
 
@@ -54,7 +52,7 @@ class _DataSearch extends SearchDelegate<String> {
     return [
       IconButton(
         icon: Icon(Icons.clear),
-        onPressed: () => query = "",
+        onPressed: () => _clear(context),
       ),
     ];
   }
@@ -77,6 +75,18 @@ class _DataSearch extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return SearchSuggestions(query, suggestionsStore);
+    return SearchSuggestions(
+      query: query,
+      store: suggestionsStore,
+      onItemPressed: (item) {
+        query = item;
+        showResults(context);
+      },
+    );
+  }
+
+  void _clear(BuildContext context) {
+    query = "";
+    showSuggestions(context);
   }
 }
