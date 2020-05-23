@@ -6,25 +6,30 @@ class RecentSearchesRepository {
   static const SEARCHES = 'searches';
   
   Future<List<String>> fetch([String query, int limit = 10]) async {
-    final storageReady = await _storage.ready;
+    try {
+      final storageReady = await _storage.ready;
 
-    if (storageReady == false) return [];
+      if (storageReady == false) return [];
 
-    Map<String, dynamic> searches = _storage.getItem(SEARCHES);
+      Map<String, dynamic> searches = _storage.getItem(SEARCHES);
 
-    if (searches == null) return [];
+      if (searches == null) return [];
 
-    var entries = searches.entries.toList();
+      var entries = searches.entries.toList();
 
-    entries.sort((a, b) => a.value > b.value ? -1 : 1);
+      entries.sort((a, b) => a.value > b.value ? -1 : 1);
 
-    final recentQueries = entries.map((e) => e.key);
+      final recentQueries = entries.map((e) => e.key);
 
-    if (query == null || query.isEmpty) {
-      return recentQueries.take(limit).toList();
+      if (query == null || query.isEmpty) {
+        return recentQueries.take(limit).toList();
+      }
+
+      return recentQueries.where((q) => q.contains(query)).take(limit).toList();
+    } catch (e) {
+      print(e);
+      return [];
     }
-
-    return recentQueries.where((q) => q.contains(query)).take(limit).toList();
   }
 
   Future save(String query) async {

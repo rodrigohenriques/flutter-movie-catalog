@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 import 'package:moviecatalog/data/repositories/movie_repository.dart';
 import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
@@ -21,47 +22,43 @@ abstract class _SearchStore with Store {
   List<Movie> movies = [];
 
   @observable
-  bool isSearching = false;
+  bool searching = false;
+
+  @observable
+  bool loadingMore = false;
 
   @computed
   bool get hasLoadMore => _page < _totalPages;
 
   @action
   Future<void> search(String query) async {
+    searching = true;
     await _recentSearchesRepository.save(query);
-    
-    Either<HttpError, SearchResult> result = await _search(query);
-
-    this._totalPages =
-        result.map((result) => result.totalPages).getOrElse(() => 0);
-
-    this.movies = result.fold(
-      (error) => [],
-      (searchResult) => searchResult.results,
-    );
+    this.movies = await _search(query);
+    searching = false;
   }
 
   @action
   Future<void> loadMore() async {
-    final result = await _search(_query, _page + 1);
-
-    this.movies += result.fold(
-      (error) => [],
-      (searchResult) => searchResult.results,
-    );
+    loadingMore = true;
+    final moreMovies = await _search(_query, _page + 1);
+    this.movies += moreMovies;
+    loadingMore = false;
   }
 
-  Future<Either<HttpError, SearchResult>> _search(String query,
-      [int page = 1]) async {
+  Future<List<Movie>> _search(String query, [int page = 1]) async {
     this._query = query;
     this._page = page;
 
-    this.isSearching = true;
-
     final result = await _movieRepository.search(query, page);
 
-    this.isSearching = false;
+    this._totalPages =
+        result.map((result) => result.totalPages).getOrElse(() => 0);
 
-    return result;
+    return result.fold(
+      (error) => [],
+      (searchResult) =>
+          searchResult.results.where((e) => e.posterPath != null).toList(),
+    );
   }
 }

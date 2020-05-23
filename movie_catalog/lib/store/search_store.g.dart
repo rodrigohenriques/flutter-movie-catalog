@@ -32,18 +32,33 @@ mixin _$SearchStore on _SearchStore, Store {
     });
   }
 
-  final _$isSearchingAtom = Atom(name: '_SearchStore.isSearching');
+  final _$searchingAtom = Atom(name: '_SearchStore.searching');
 
   @override
-  bool get isSearching {
-    _$isSearchingAtom.reportRead();
-    return super.isSearching;
+  bool get searching {
+    _$searchingAtom.reportRead();
+    return super.searching;
   }
 
   @override
-  set isSearching(bool value) {
-    _$isSearchingAtom.reportWrite(value, super.isSearching, () {
-      super.isSearching = value;
+  set searching(bool value) {
+    _$searchingAtom.reportWrite(value, super.searching, () {
+      super.searching = value;
+    });
+  }
+
+  final _$loadingMoreAtom = Atom(name: '_SearchStore.loadingMore');
+
+  @override
+  bool get loadingMore {
+    _$loadingMoreAtom.reportRead();
+    return super.loadingMore;
+  }
+
+  @override
+  set loadingMore(bool value) {
+    _$loadingMoreAtom.reportWrite(value, super.loadingMore, () {
+      super.loadingMore = value;
     });
   }
 
@@ -65,7 +80,8 @@ mixin _$SearchStore on _SearchStore, Store {
   String toString() {
     return '''
 movies: ${movies},
-isSearching: ${isSearching},
+searching: ${searching},
+loadingMore: ${loadingMore},
 hasLoadMore: ${hasLoadMore}
     ''';
   }
