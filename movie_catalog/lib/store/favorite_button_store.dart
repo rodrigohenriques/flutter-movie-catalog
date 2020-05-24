@@ -20,14 +20,17 @@ abstract class _FavoriteButtonStore with Store {
   @observable
   bool isFavorite;
 
-  StreamSubscription<Map<String, Movie>> _subscription;
+  StreamSubscription<bool> _subscription;
 
   void connect() {
-    _subscription = repository.stream.listen(_update);
+    _subscription = repository.stream
+        .map((event) => event.containsKey(movie.id))
+        .where((event) => event != isFavorite)
+        .listen(_update);
   }
 
   void disconnect() {
-    _subscription.cancel();
+    _subscription?.cancel();
   }
 
   void addFavorite() {
@@ -39,7 +42,7 @@ abstract class _FavoriteButtonStore with Store {
   }
 
   @action
-  void _update(Map<String, Movie> movies) {
-    this.isFavorite = movies.containsKey(movie.id);
+  void _update(bool isFavorite) {
+    this.isFavorite = isFavorite;
   }
 }

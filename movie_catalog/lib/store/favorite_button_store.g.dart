@@ -28,11 +28,11 @@ mixin _$FavoriteButtonStore on _FavoriteButtonStore, Store {
       ActionController(name: '_FavoriteButtonStore');
 
   @override
-  void _update(Map<String, Movie> movies) {
+  void _update(bool isFavorite) {
     final _$actionInfo = _$_FavoriteButtonStoreActionController.startAction(
         name: '_FavoriteButtonStore._update');
     try {
-      return super._update(movies);
+      return super._update(isFavorite);
     } finally {
       _$_FavoriteButtonStoreActionController.endAction(_$actionInfo);
     }
