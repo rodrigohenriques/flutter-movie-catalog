@@ -14,23 +14,26 @@ class MoviePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (_, boxConstraints) {
-        return CustomScrollView(
-          slivers: <Widget>[
-            SliverMovieHeader(
-              movie: movie,
-              height: boxConstraints.maxHeight * 0.8,
-              width: boxConstraints.maxWidth,
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate([
-                buildMovieOverview(context),
-              ]),
-            ),
-          ],
-        );
-      },
+    return Container(
+      color: Colors.black,
+      child: LayoutBuilder(
+        builder: (_, boxConstraints) {
+          return CustomScrollView(
+            slivers: <Widget>[
+              SliverMovieHeader(
+                movie: movie,
+                height: boxConstraints.maxHeight * 0.8,
+                width: boxConstraints.maxWidth,
+              ),
+              SliverList(
+                delegate: SliverChildListDelegate([
+                  buildMovieOverview(context),
+                ]),
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 
