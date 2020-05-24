@@ -8,13 +8,12 @@ class MoviePoster extends StatelessWidget {
 
   final String posterPath;
 
-  String get imageUrl => "https://image.tmdb.org/t/p/original$posterPath";
+  String get imageUrl => "https://image.tmdb.org/t/p/w300$posterPath";
 
   @override
   Widget build(BuildContext context) {
-    return FadeInImage.assetNetwork(
-      placeholder: 'assets/images/placeholder.png',
-      image: imageUrl,
+    return Image.network(
+      imageUrl,
       alignment: AlignmentDirectional.topCenter,
       fit: BoxFit.cover,
     );

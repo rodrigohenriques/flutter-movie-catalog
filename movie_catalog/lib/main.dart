@@ -5,7 +5,7 @@ import 'package:moviecatalog/resources/strings.dart';
 import 'package:moviecatalog/store/favorite_movies_store.dart';
 import 'package:moviecatalog/store/search_store.dart';
 import 'package:moviecatalog/store/search_suggestions_store.dart';
-import 'package:moviecatalog/widgets/home_page.dart';
+import 'package:moviecatalog/widgets/favorite_movies_page.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -35,7 +35,7 @@ class MovieCatalogApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomePage(),
+      home: FavoriteMoviesPage(),
     );
   }
 }

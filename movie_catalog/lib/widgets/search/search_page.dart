@@ -2,34 +2,65 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/model/movie.dart';
+import 'package:moviecatalog/resources/strings.dart';
 import 'package:moviecatalog/store/search_store.dart';
 import 'package:moviecatalog/widgets/favorite/favorite_button.dart';
 import 'package:moviecatalog/widgets/movie/movie_page.dart';
 import 'package:moviecatalog/widgets/movie/movie_poster.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({Key key, this.query, this.store}) : super(key: key);
+  SearchPage({Key key, this.query, this.store}) : super(key: key) {
+    store.search(query);
+  }
 
   final String query;
   final SearchStore store;
 
   @override
   Widget build(BuildContext context) {
-    store.search(query);
-
     return Observer(
-      builder: (context) => store.searching
-          ? Center(child: CircularProgressIndicator())
-          : GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: (3 / 4),
-              padding: EdgeInsets.all(8),
-              children: List.generate(
-                store.movies.length,
-                (index) => MovieCard(movie: store.movies[index]),
-              ),
-            ),
+      builder: (context) => MovieGrid(
+        movies: store.movies,
+        isLoading: store.searching,
+        emptyMessage: Strings.noResults,
+      ),
     );
+  }
+}
+
+class MovieGrid extends StatelessWidget {
+  const MovieGrid({
+    Key key,
+    @required this.movies,
+    this.isLoading = false,
+    this.emptyMessage,
+  }) : super(key: key);
+
+  final bool isLoading;
+  final List<Movie> movies;
+  final String emptyMessage;
+
+  @override
+  Widget build(BuildContext context) {
+    return isLoading ? buildLoading() : buildMovieCards();
+  }
+
+  Widget buildLoading() => Center(child: CircularProgressIndicator());
+
+  Widget buildNoResults() => Center(child: Text(emptyMessage));
+
+  Widget buildMovieCards() {
+    return movies.length == 0
+        ? buildNoResults()
+        : GridView.count(
+            crossAxisCount: 2,
+            childAspectRatio: (3 / 4),
+            padding: EdgeInsets.all(8),
+            children: List.generate(
+              movies.length,
+              (index) => MovieCard(movie: movies[index]),
+            ),
+          );
   }
 }
 
