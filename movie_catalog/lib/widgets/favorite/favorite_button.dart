@@ -1,16 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:moviecatalog/model/movie.dart';
+import 'package:moviecatalog/store/favorite_movies_store.dart';
+import 'package:provider/provider.dart';
 
 class FavoriteButton extends StatelessWidget {
+  const FavoriteButton({Key key, this.movie}) : super(key: key);
+
+  final Movie movie;
+
   @override
   Widget build(BuildContext context) {
-    final isFavorite = false;
+    final store = Provider.of<FavoriteMoviesStore>(context);
 
-    return IconButton(
-      icon: Icon(
-        isFavorite ? Icons.favorite : Icons.favorite_border,
-        color: isFavorite ? Colors.red : Colors.white,
-      ),
-      onPressed: null,
+    return Observer(
+      builder: (_) {
+        var ids = store.favorites.map((e) => e.id);
+
+        return ids.contains(movie.id)
+            ? IconButton(
+                icon: Icon(Icons.favorite, color: Colors.red),
+                onPressed: () => store.removeFavorite(movie),
+              )
+            : IconButton(
+                icon: Icon(Icons.favorite_border, color: Colors.white),
+                onPressed: () => store.addFavorite(movie),
+              );
+      },
     );
   }
 }

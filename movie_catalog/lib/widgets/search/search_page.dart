@@ -40,7 +40,6 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(movie);
     return InkWell(
       child: Card(
         semanticContainer: true,
@@ -69,7 +68,7 @@ class MovieCard extends StatelessWidget {
               ),
               Align(
                 alignment: AlignmentDirectional.bottomEnd,
-                child: FavoriteButton(),
+                child: FavoriteButton(movie: movie),
               ),
             ],
           );

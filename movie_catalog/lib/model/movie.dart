@@ -12,7 +12,10 @@ class Movie {
         overview = json['overview'],
         posterPath = json['poster_path'];
 
-  String poster() {
-    return "https://image.tmdb.org/t/p/original$posterPath";
-  }
+  Map<String, dynamic> toJson() => {
+      'id': id,
+      'title': title,
+      'overview': overview,
+      'poster_path': posterPath,
+    };
 }

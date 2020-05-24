@@ -1,9 +1,7 @@
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/widgets/favorite/favorite_button.dart';
 
-import 'movie_page.dart';
 import 'movie_poster.dart';
 
 class SliverMovieHeader extends StatelessWidget {
@@ -96,8 +94,8 @@ class _MovieHeader extends StatelessWidget {
                   movie.title,
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.headline6.copyWith(
-                    color: Colors.white,
-                  ),
+                        color: Colors.white,
+                      ),
                 ),
               ),
             ],
@@ -108,13 +106,10 @@ class _MovieHeader extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-            actions: <Widget>[
-              FavoriteButton(),
-            ],
+            actions: <Widget>[FavoriteButton(movie: movie)],
           ),
         ),
       ],
     );
   }
-
 }
