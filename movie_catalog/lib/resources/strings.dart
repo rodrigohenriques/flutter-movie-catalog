@@ -1,6 +1,8 @@
 class Strings {
-  static const homePageTitle = "Movie Catalog";
+  static const homePageTitle = "Favorite Movies";
   static const moviePageTitle = "Movie Details";
 
   static var appTitle = "Movie Catalog";
+
+  static String noFavoriteYet = "Search your favorite movies";
 }
