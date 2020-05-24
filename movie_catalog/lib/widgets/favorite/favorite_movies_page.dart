@@ -29,7 +29,7 @@ class FavoriteMoviesPage extends StatelessWidget {
       body: Consumer<FavoriteMoviesStore>(
         builder: (_, store, __) => Observer(
           builder: (context) => MovieGrid(
-            movies: store.favorites,
+            movies: store.favorites.values.toList(),
             emptyMessage: Strings.noFavoriteYet,
           ),
         ),

@@ -1,0 +1,45 @@
+import 'dart:async';
+
+import 'package:mobx/mobx.dart';
+import 'package:moviecatalog/data/repositories/favorite_movies_repository.dart';
+import 'package:moviecatalog/model/movie.dart';
+
+part 'favorite_button_store.g.dart';
+
+class FavoriteButtonStore = _FavoriteButtonStore
+    with _$FavoriteButtonStore;
+
+abstract class _FavoriteButtonStore with Store {
+  _FavoriteButtonStore(this.movie) {
+    this.isFavorite = repository.exists(movie.id);
+  }
+
+  final Movie movie;
+  final FavoriteMoviesRepository repository = FavoriteMoviesRepository.instance;
+
+  @observable
+  bool isFavorite;
+
+  StreamSubscription<Map<String, Movie>> _subscription;
+
+  void connect() {
+    _subscription = repository.stream.listen(_update);
+  }
+
+  void disconnect() {
+    _subscription.cancel();
+  }
+
+  void addFavorite() {
+    repository.save(movie);
+  }
+
+  void removeFavorite() {
+    repository.delete(movie.id);
+  }
+
+  @action
+  void _update(Map<String, Movie> movies) {
+    this.isFavorite = movies.containsKey(movie.id);
+  }
+}

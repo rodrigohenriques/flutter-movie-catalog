@@ -17,9 +17,9 @@ class FavoriteMoviesRepository {
 
   Map<String, Movie> _cachedFavoriteMovies;
 
-  final _streamController = StreamController<List<Movie>>();
+  final _streamController = StreamController<Map<String, Movie>>.broadcast();
 
-  Stream<List<Movie>> get stream => _streamController.stream;
+  Stream<Map<String, Movie>> get stream => _streamController.stream;
 
   void save(Movie movie) async {
     await _cacheStorageData();
@@ -33,13 +33,13 @@ class FavoriteMoviesRepository {
     _updateLocalStorage(_cachedFavoriteMovies);
   }
 
-  bool exists(int movieId) {
-    return _cachedFavoriteMovies.containsKey(movieId.toString());
+  bool exists(String movieId) {
+    return _cachedFavoriteMovies.containsKey(movieId);
   }
 
-  void delete(int movieId) async {
-    if (_cachedFavoriteMovies.containsKey(movieId.toString())) {
-      _cachedFavoriteMovies.remove(movieId.toString());
+  void delete(String movieId) async {
+    if (exists(movieId)) {
+      _cachedFavoriteMovies.remove(movieId);
       _updateLocalStorage(_cachedFavoriteMovies);
     }
   }
@@ -64,6 +64,6 @@ class FavoriteMoviesRepository {
   }
 
   void _dispatchMovies(Map<String, Movie> data) {
-    _streamController.add(data.values.toList());
+    _streamController.add(data);
   }
 }

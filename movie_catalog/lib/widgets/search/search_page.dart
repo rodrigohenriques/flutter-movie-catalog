@@ -99,7 +99,7 @@ class MovieCard extends StatelessWidget {
               ),
               Align(
                 alignment: AlignmentDirectional.bottomEnd,
-                child: FavoriteButton(movie: movie),
+                child: FavoriteButton(movie),
               ),
             ],
           );

@@ -15,7 +15,7 @@ abstract class _FavoriteMoviesStore with Store {
   final FavoriteMoviesRepository repository;
 
   @observable
-  List<Movie> favorites = [];
+  Map<String, Movie> favorites = {};
 
   @action
   void addFavorite(Movie movie) {
@@ -28,7 +28,7 @@ abstract class _FavoriteMoviesStore with Store {
   }
 
   @action
-  void _update(List<Movie> movies) {
+  void _update(Map<String, Movie> movies) {
     this.favorites = movies;
   }
 }

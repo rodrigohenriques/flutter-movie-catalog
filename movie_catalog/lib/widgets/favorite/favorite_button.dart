@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:moviecatalog/model/movie.dart';
-import 'package:moviecatalog/store/favorite_movies_store.dart';
-import 'package:provider/provider.dart';
+import 'package:moviecatalog/store/favorite_button_store.dart';
 
-class FavoriteButton extends StatelessWidget {
-  const FavoriteButton({Key key, this.movie}) : super(key: key);
+class FavoriteButton extends StatefulWidget {
+  FavoriteButton(Movie movie) {
+    this.store = FavoriteButtonStore(movie);
+  }
 
-  final Movie movie;
+  FavoriteButtonStore store;
+
+  @override
+  _FavoriteButtonState createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  @override
+  void initState() {
+    super.initState();
+    widget.store.connect();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final store = Provider.of<FavoriteMoviesStore>(context);
-
     return Observer(
       builder: (_) {
-        var ids = store.favorites.map((e) => e.id);
-
-        return ids.contains(movie.id)
+        return widget.store.isFavorite
             ? IconButton(
                 icon: Icon(Icons.favorite, color: Colors.red),
-                onPressed: () => store.removeFavorite(movie),
+                onPressed: () => widget.store.removeFavorite(),
               )
             : IconButton(
                 icon: Icon(Icons.favorite_border, color: Colors.white),
-                onPressed: () => store.addFavorite(movie),
+                onPressed: () => widget.store.addFavorite(),
               );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.store.disconnect();
   }
 }

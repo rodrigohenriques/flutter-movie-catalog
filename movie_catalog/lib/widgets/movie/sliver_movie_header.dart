@@ -106,7 +106,7 @@ class _MovieHeader extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,
-            actions: <Widget>[FavoriteButton(movie: movie)],
+            actions: <Widget>[FavoriteButton(movie)],
           ),
         ),
       ],

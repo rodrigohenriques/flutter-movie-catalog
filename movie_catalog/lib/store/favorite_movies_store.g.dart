@@ -12,13 +12,13 @@ mixin _$FavoriteMoviesStore on _FavoriteMoviesStore, Store {
   final _$favoritesAtom = Atom(name: '_FavoriteMoviesStore.favorites');
 
   @override
-  List<Movie> get favorites {
+  Map<String, Movie> get favorites {
     _$favoritesAtom.reportRead();
     return super.favorites;
   }
 
   @override
-  set favorites(List<Movie> value) {
+  set favorites(Map<String, Movie> value) {
     _$favoritesAtom.reportWrite(value, super.favorites, () {
       super.favorites = value;
     });
@@ -50,7 +50,7 @@ mixin _$FavoriteMoviesStore on _FavoriteMoviesStore, Store {
   }
 
   @override
-  void _update(List<Movie> movies) {
+  void _update(Map<String, Movie> movies) {
     final _$actionInfo = _$_FavoriteMoviesStoreActionController.startAction(
         name: '_FavoriteMoviesStore._update');
     try {
