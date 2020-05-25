@@ -4,7 +4,7 @@ class Strings {
 
   static var appTitle = "Movie Catalog";
 
-  static String noFavoriteYet = "Search your favorite movies";
+  static const String noFavoriteYet = "Search your favorite movies";
 
-  static String noResults = "Movie not found";
+  static const String noResults = "Movie not found";
 }

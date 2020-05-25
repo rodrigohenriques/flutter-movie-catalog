@@ -4,8 +4,8 @@ import 'package:moviecatalog/resources/strings.dart';
 import 'package:moviecatalog/store/favorite_movies_store.dart';
 import 'package:moviecatalog/store/search_store.dart';
 import 'package:moviecatalog/store/search_suggestions_store.dart';
+import 'package:moviecatalog/widgets/movie/movie_grid.dart';
 import 'package:moviecatalog/widgets/search/search_delegate.dart';
-import 'package:moviecatalog/widgets/search/search_page.dart';
 import 'package:provider/provider.dart';
 
 class FavoriteMoviesPage extends StatelessWidget {
