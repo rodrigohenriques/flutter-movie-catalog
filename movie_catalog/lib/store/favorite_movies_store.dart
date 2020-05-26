@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import 'package:moviecatalog/data/repositories/favorite_movies_repository.dart';
 import 'package:moviecatalog/model/movie.dart';
+import 'package:moviecatalog/repositories/favorite_movies_repository.dart';
 
 part 'favorite_movies_store.g.dart';
 

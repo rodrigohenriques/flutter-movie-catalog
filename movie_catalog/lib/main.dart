@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
-import 'package:moviecatalog/data/repositories/favorite_movies_repository.dart';
-import 'package:moviecatalog/data/repositories/movie_repository.dart';
-import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
+import 'package:moviecatalog/repositories/favorite_movies_repository.dart';
+import 'package:moviecatalog/repositories/movie_repository.dart';
+import 'package:moviecatalog/repositories/recent_searches_repository.dart';
 import 'package:moviecatalog/resources/strings.dart';
 import 'package:moviecatalog/store/favorite_movies_store.dart';
 import 'package:moviecatalog/store/search_store.dart';

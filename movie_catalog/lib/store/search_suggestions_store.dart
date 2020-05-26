@@ -1,5 +1,5 @@
 import 'package:mobx/mobx.dart';
-import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
+import 'package:moviecatalog/repositories/recent_searches_repository.dart';
 
 part 'search_suggestions_store.g.dart';
 

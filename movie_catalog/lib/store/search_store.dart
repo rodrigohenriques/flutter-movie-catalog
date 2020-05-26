@@ -1,7 +1,7 @@
 import 'package:mobx/mobx.dart';
-import 'package:moviecatalog/data/repositories/movie_repository.dart';
-import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
 import 'package:moviecatalog/model/movie.dart';
+import 'package:moviecatalog/repositories/movie_repository.dart';
+import 'package:moviecatalog/repositories/recent_searches_repository.dart';
 
 part 'search_store.g.dart';
 
