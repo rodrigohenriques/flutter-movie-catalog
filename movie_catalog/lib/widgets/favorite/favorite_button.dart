@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/store/favorite_button_store.dart';
 
 class FavoriteButton extends StatefulWidget {
-  FavoriteButton(Movie movie) {
-    this.store = FavoriteButtonStore(movie);
-  }
+  const FavoriteButton(this.store);
 
-  FavoriteButtonStore store;
+  final FavoriteButtonStore store;
 
   @override
   _FavoriteButtonState createState() => _FavoriteButtonState();

@@ -7,7 +7,9 @@ class SearchSuggestionsStore = _SearchSuggestionsStore
     with _$SearchSuggestionsStore;
 
 abstract class _SearchSuggestionsStore with Store {
-  final _repository = RecentSearchesRepository();
+  _SearchSuggestionsStore(this._repository);
+
+  final RecentSearchesRepository _repository;
 
   @observable
   List<String> suggestions = [];

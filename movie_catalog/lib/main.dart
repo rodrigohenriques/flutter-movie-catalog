@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:moviecatalog/data/repositories/favorite_movies_repository.dart';
+import 'package:moviecatalog/data/repositories/movie_repository.dart';
+import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
 import 'package:moviecatalog/resources/strings.dart';
 import 'package:moviecatalog/store/favorite_movies_store.dart';
 import 'package:moviecatalog/store/search_store.dart';
@@ -12,13 +14,25 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider<SearchStore>(create: (context) => SearchStore()),
-        Provider<SearchSuggestionsStore>(
-          create: (_) => SearchSuggestionsStore(),
+        Provider<MovieRepository>(create: (_) => MovieRepositoryImpl()),
+        Provider<FavoriteMoviesRepository>(
+          create: (_) => FavoriteMoviesRepositoryImpl(),
         ),
-        Provider<FavoriteMoviesStore>(
-          create: (context) =>
-              FavoriteMoviesStore(FavoriteMoviesRepository.instance),
+        Provider<RecentSearchesRepository>(
+          create: (_) => RecentSearchesRepositoryImpl(),
+        ),
+        Provider<MovieRepository>(create: (_) => MovieRepositoryImpl()),
+        ProxyProvider2<MovieRepository, RecentSearchesRepository, SearchStore>(
+          update: (context, movieRepo, recentSearchRepo, _) =>
+              SearchStore(movieRepo, recentSearchRepo),
+        ),
+        ProxyProvider<RecentSearchesRepository, SearchSuggestionsStore>(
+          update: (context, recentSearchRepo, _) =>
+              SearchSuggestionsStore(recentSearchRepo),
+        ),
+        ProxyProvider<FavoriteMoviesRepository, FavoriteMoviesStore>(
+          update: (context, favoriteMoviesRepo, _) =>
+              FavoriteMoviesStore(favoriteMoviesRepo),
         ),
       ],
       child: MovieCatalogApp(),

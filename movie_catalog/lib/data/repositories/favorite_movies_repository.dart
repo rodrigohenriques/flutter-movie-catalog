@@ -1,13 +1,22 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:moviecatalog/model/movie.dart';
 
-class FavoriteMoviesRepository {
-  static final instance = FavoriteMoviesRepository();
+abstract class FavoriteMoviesRepository {
+  Stream<Map<String, Movie>> get stream;
 
-  FavoriteMoviesRepository() {
-    print("New favorite movies repository created: ${this.hashCode}");
+  void save(Movie movie);
+
+  bool exists(String movieId);
+
+  void delete(String movieId);
+}
+
+class FavoriteMoviesRepositoryImpl implements FavoriteMoviesRepository {
+  FavoriteMoviesRepositoryImpl() {
+    debugPrint("New favorite movies repository created: ${this.hashCode}");
     _cacheStorageData();
   }
 

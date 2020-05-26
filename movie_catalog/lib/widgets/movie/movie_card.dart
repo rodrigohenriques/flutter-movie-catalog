@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:moviecatalog/model/movie.dart';
+import 'package:moviecatalog/store/favorite_button_store.dart';
 import 'package:moviecatalog/widgets/favorite/favorite_button.dart';
+import 'package:provider/provider.dart';
 
 import 'movie_page.dart';
 import 'movie_poster.dart';
@@ -40,7 +42,9 @@ class MovieCard extends StatelessWidget {
               ),
               Align(
                 alignment: AlignmentDirectional.bottomEnd,
-                child: FavoriteButton(movie),
+                child: FavoriteButton(
+                  FavoriteButtonStore(movie, Provider.of(context)),
+                ),
               ),
             ],
           );

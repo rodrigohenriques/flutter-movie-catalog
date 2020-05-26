@@ -1,22 +1,23 @@
 import 'package:dartz/dartz.dart';
 import 'package:localstorage/localstorage.dart';
 
-class RecentSearchesRepository {
+abstract class RecentSearchesRepository {
+  Future<List<String>> fetch([String query, int limit = 10]);
+
+  Future save(String query);
+}
+
+class RecentSearchesRepositoryImpl implements RecentSearchesRepository {
   static const SEARCHES = 'searches';
 
   Future<List<String>> fetch([String query, int limit = 10]) async {
     final optionalStorage = await _prepareStorage();
 
     return optionalStorage
-        .flatMap(getSearches)
+        .flatMap(_getSearches)
         .map(_sortByMostRecent)
         .map(_filterBy(query))
         .fold(() => [], (items) => items.take(limit).toList());
-  }
-
-  Option<Map<String, dynamic>> getSearches(LocalStorage storage) {
-    var item = storage.getItem(SEARCHES);
-    return item != null ? Some(item) : None();
   }
 
   Future save(String query) async {
@@ -28,7 +29,7 @@ class RecentSearchesRepository {
       () {},
       (storage) {
         Map<String, dynamic> searches =
-            getSearches(storage).getOrElse(() => Map());
+            _getSearches(storage).getOrElse(() => Map());
 
         searches.update(
           query,
@@ -39,6 +40,11 @@ class RecentSearchesRepository {
         storage.setItem(SEARCHES, searches);
       },
     );
+  }
+
+  Option<Map<String, dynamic>> _getSearches(LocalStorage storage) {
+    var item = storage.getItem(SEARCHES);
+    return item != null ? Some(item) : None();
   }
 
   List<String> _sortByMostRecent(Map<String, dynamic> data) {

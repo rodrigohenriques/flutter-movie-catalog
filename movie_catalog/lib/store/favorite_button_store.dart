@@ -10,12 +10,12 @@ class FavoriteButtonStore = _FavoriteButtonStore
     with _$FavoriteButtonStore;
 
 abstract class _FavoriteButtonStore with Store {
-  _FavoriteButtonStore(this.movie) {
+  _FavoriteButtonStore(this.movie, this.repository) {
     this.isFavorite = repository.exists(movie.id);
   }
 
   final Movie movie;
-  final FavoriteMoviesRepository repository = FavoriteMoviesRepository.instance;
+  final FavoriteMoviesRepository repository;
 
   @observable
   bool isFavorite;
