@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/store/favorite_button_store.dart';
@@ -53,7 +54,9 @@ class MovieCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => MoviePage(movie: movie)),
+          CupertinoPageRoute(
+            builder: (context) => MoviePage(movie: movie),
+          ),
         );
       },
     );
