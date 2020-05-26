@@ -14,7 +14,8 @@ void main() async {
       providers: [
         Provider<SearchStore>(create: (context) => SearchStore()),
         Provider<SearchSuggestionsStore>(
-            create: (_) => SearchSuggestionsStore()),
+          create: (_) => SearchSuggestionsStore(),
+        ),
         Provider<FavoriteMoviesStore>(
           create: (context) =>
               FavoriteMoviesStore(FavoriteMoviesRepository.instance),

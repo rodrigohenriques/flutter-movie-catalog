@@ -9,14 +9,6 @@ part of 'search_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SearchStore on _SearchStore, Store {
-  Computed<bool> _$hasLoadMoreComputed;
-
-  @override
-  bool get hasLoadMore =>
-      (_$hasLoadMoreComputed ??= Computed<bool>(() => super.hasLoadMore,
-              name: '_SearchStore.hasLoadMore'))
-          .value;
-
   final _$moviesAtom = Atom(name: '_SearchStore.movies');
 
   @override
@@ -47,18 +39,18 @@ mixin _$SearchStore on _SearchStore, Store {
     });
   }
 
-  final _$loadingMoreAtom = Atom(name: '_SearchStore.loadingMore');
+  final _$hasMoreItemsAtom = Atom(name: '_SearchStore.hasMoreItems');
 
   @override
-  bool get loadingMore {
-    _$loadingMoreAtom.reportRead();
-    return super.loadingMore;
+  bool get hasMoreItems {
+    _$hasMoreItemsAtom.reportRead();
+    return super.hasMoreItems;
   }
 
   @override
-  set loadingMore(bool value) {
-    _$loadingMoreAtom.reportWrite(value, super.loadingMore, () {
-      super.loadingMore = value;
+  set hasMoreItems(bool value) {
+    _$hasMoreItemsAtom.reportWrite(value, super.hasMoreItems, () {
+      super.hasMoreItems = value;
     });
   }
 
@@ -81,8 +73,7 @@ mixin _$SearchStore on _SearchStore, Store {
     return '''
 movies: ${movies},
 searching: ${searching},
-loadingMore: ${loadingMore},
-hasLoadMore: ${hasLoadMore}
+hasMoreItems: ${hasMoreItems}
     ''';
   }
 }

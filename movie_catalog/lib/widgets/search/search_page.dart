@@ -20,6 +20,8 @@ class SearchPage extends StatelessWidget {
         movies: store.movies,
         isLoading: store.searching,
         emptyMessage: Strings.noResults,
+        loadMore: store.loadMore,
+        hasMoreItems: store.hasMoreItems
       ),
     );
   }

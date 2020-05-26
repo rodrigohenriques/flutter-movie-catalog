@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:mobx/mobx.dart';
 import 'package:moviecatalog/data/repositories/movie_repository.dart';
 import 'package:moviecatalog/data/repositories/recent_searches_repository.dart';
@@ -12,7 +13,7 @@ abstract class _SearchStore with Store {
   final _recentSearchesRepository = RecentSearchesRepository();
   var _query = "";
   var _page = 1;
-  int _totalPages;
+  int _totalPages = 0;
 
   @observable
   List<Movie> movies = [];
@@ -21,10 +22,7 @@ abstract class _SearchStore with Store {
   bool searching = false;
 
   @observable
-  bool loadingMore = false;
-
-  @computed
-  bool get hasLoadMore => _page < _totalPages;
+  bool hasMoreItems = false;
 
   @action
   Future<void> search(String query) async {
@@ -36,10 +34,10 @@ abstract class _SearchStore with Store {
 
   @action
   Future<void> loadMore() async {
-    loadingMore = true;
-    final moreMovies = await _search(_query, _page + 1);
-    this.movies += moreMovies;
-    loadingMore = false;
+    if (hasMoreItems) {
+      final moreMovies = await _search(_query, _page + 1);
+      this.movies += moreMovies;
+    }
   }
 
   Future<List<Movie>> _search(String query, [int page = 1]) async {
@@ -50,6 +48,10 @@ abstract class _SearchStore with Store {
 
     this._totalPages =
         result.map((result) => result.totalPages).getOrElse(() => 0);
+
+    this.hasMoreItems = _page < _totalPages;
+
+    debugPrint("$query got $_page out of $_totalPages");
 
     return result.fold(
       (error) => [],
