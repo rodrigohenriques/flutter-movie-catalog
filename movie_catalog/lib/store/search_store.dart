@@ -12,8 +12,12 @@ abstract class _SearchStore with Store {
   final _movieRepository = MovieRepository();
   final _recentSearchesRepository = RecentSearchesRepository();
   var _query = "";
-  var _page = 1;
-  int _totalPages = 0;
+
+  @observable
+  var _page = 0;
+
+  @observable
+  int _totalPages = 1;
 
   @observable
   List<Movie> movies = [];
@@ -21,8 +25,8 @@ abstract class _SearchStore with Store {
   @observable
   bool searching = false;
 
-  @observable
-  bool hasMoreItems = false;
+  @computed
+  bool get hasMoreItems => _page < _totalPages;
 
   @action
   Future<void> search(String query) async {
@@ -42,16 +46,12 @@ abstract class _SearchStore with Store {
 
   Future<List<Movie>> _search(String query, [int page = 1]) async {
     this._query = query;
-    this._page = page;
 
     final result = await _movieRepository.search(query, page);
 
+    this._page = page;
     this._totalPages =
         result.map((result) => result.totalPages).getOrElse(() => 0);
-
-    this.hasMoreItems = _page < _totalPages;
-
-    debugPrint("$query got $_page out of $_totalPages");
 
     return result.fold(
       (error) => [],

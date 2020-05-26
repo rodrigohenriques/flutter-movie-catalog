@@ -9,6 +9,44 @@ part of 'search_store.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$SearchStore on _SearchStore, Store {
+  Computed<bool> _$hasMoreItemsComputed;
+
+  @override
+  bool get hasMoreItems =>
+      (_$hasMoreItemsComputed ??= Computed<bool>(() => super.hasMoreItems,
+              name: '_SearchStore.hasMoreItems'))
+          .value;
+
+  final _$_pageAtom = Atom(name: '_SearchStore._page');
+
+  @override
+  int get _page {
+    _$_pageAtom.reportRead();
+    return super._page;
+  }
+
+  @override
+  set _page(int value) {
+    _$_pageAtom.reportWrite(value, super._page, () {
+      super._page = value;
+    });
+  }
+
+  final _$_totalPagesAtom = Atom(name: '_SearchStore._totalPages');
+
+  @override
+  int get _totalPages {
+    _$_totalPagesAtom.reportRead();
+    return super._totalPages;
+  }
+
+  @override
+  set _totalPages(int value) {
+    _$_totalPagesAtom.reportWrite(value, super._totalPages, () {
+      super._totalPages = value;
+    });
+  }
+
   final _$moviesAtom = Atom(name: '_SearchStore.movies');
 
   @override
@@ -36,21 +74,6 @@ mixin _$SearchStore on _SearchStore, Store {
   set searching(bool value) {
     _$searchingAtom.reportWrite(value, super.searching, () {
       super.searching = value;
-    });
-  }
-
-  final _$hasMoreItemsAtom = Atom(name: '_SearchStore.hasMoreItems');
-
-  @override
-  bool get hasMoreItems {
-    _$hasMoreItemsAtom.reportRead();
-    return super.hasMoreItems;
-  }
-
-  @override
-  set hasMoreItems(bool value) {
-    _$hasMoreItemsAtom.reportWrite(value, super.hasMoreItems, () {
-      super.hasMoreItems = value;
     });
   }
 
