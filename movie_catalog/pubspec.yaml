@@ -47,6 +47,7 @@ dev_dependencies:
   mobx_codegen:
   test: ^1.6.1
   mockito: ^4.1.1
+  mock_data: ^1.2.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

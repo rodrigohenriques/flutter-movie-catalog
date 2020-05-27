@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
+import 'package:moviecatalog/infra/local_storage.dart';
 import 'package:moviecatalog/repositories/favorite_movies_repository.dart';
 import 'package:moviecatalog/repositories/movie_repository.dart';
 import 'package:moviecatalog/repositories/recent_searches_repository.dart';
@@ -14,9 +15,11 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
+        Provider<Storage>(create: (_) => LocalStorageImpl()),
         Provider<MovieRepository>(create: (_) => MovieRepositoryImpl()),
-        Provider<FavoriteMoviesRepository>(
-          create: (_) => FavoriteMoviesRepositoryImpl(),
+        ProxyProvider<Storage, FavoriteMoviesRepository>(
+          update: (context, storage, _) =>
+              FavoriteMoviesRepositoryImpl(storage),
         ),
         Provider<RecentSearchesRepository>(
           create: (_) => RecentSearchesRepositoryImpl(),
