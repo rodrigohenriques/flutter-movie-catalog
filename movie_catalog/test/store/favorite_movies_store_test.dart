@@ -5,8 +5,7 @@ import 'package:mockito/mockito.dart';
 import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/store/favorite_movies_store.dart';
 
-import '../repositories/favorite_movies_repository_test.dart';
-import 'favorite_button_store_test.dart';
+import '../mocks.dart';
 
 void main() {
   group("FavoriteButtonStoreTest", () {

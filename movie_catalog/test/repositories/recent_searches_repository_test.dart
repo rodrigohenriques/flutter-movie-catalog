@@ -4,7 +4,7 @@ import 'package:mockito/mockito.dart';
 import 'package:moviecatalog/repositories/recent_searches_repository.dart';
 import 'package:test/test.dart';
 
-import 'favorite_movies_repository_test.dart';
+import '../mocks.dart';
 
 void main() {
   group("RecentSearchesRepositoryTest", () {
@@ -105,5 +105,3 @@ void main() {
     });
   });
 }
-
-class MockClient extends Mock implements Client {}

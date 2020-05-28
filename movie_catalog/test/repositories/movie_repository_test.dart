@@ -6,7 +6,7 @@ import 'package:mockito/mockito.dart';
 import 'package:moviecatalog/model/search_result.dart';
 import 'package:moviecatalog/repositories/movie_repository.dart';
 
-import 'favorite_movies_repository_test.dart';
+import '../mocks.dart';
 
 void main() {
   group("MovieRepositoryTest", () {
@@ -46,5 +46,3 @@ void main() {
     });
   });
 }
-
-class MockClient extends Mock implements Client {}

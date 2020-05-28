@@ -7,7 +7,7 @@ import 'package:moviecatalog/model/movie.dart';
 import 'package:moviecatalog/repositories/favorite_movies_repository.dart';
 import 'package:moviecatalog/store/favorite_button_store.dart';
 
-import '../repositories/favorite_movies_repository_test.dart';
+import '../mocks.dart';
 
 void main() {
   group("FavoriteButtonStoreTest", () {
@@ -73,6 +73,3 @@ void main() {
     });
   });
 }
-
-class MockFavoriteMoviesRepository extends Mock
-    implements FavoriteMoviesRepository {}
