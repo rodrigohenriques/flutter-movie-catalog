@@ -16,4 +16,11 @@ class SearchResult {
             .cast<Map<String, dynamic>>()
             .map((json) => Movie.fromJson(json))
             .toList();
+
+  Map<String, dynamic> toJson() => {
+    'page': page,
+    'total_results': totalResults,
+    'total_pages': totalPages,
+    'results': results.map((item) => item.toJson()).toList(),
+  };
 }

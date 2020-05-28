@@ -11,9 +11,13 @@ abstract class MovieRepository {
 }
 
 class MovieRepositoryImpl implements MovieRepository {
+  MovieRepositoryImpl(this.client);
+
   static final _key = GlobalConfiguration().getString("apiKey");
   static const _url = "api.themoviedb.org";
   static const _searchPath = "/3/search/movie";
+
+  final Client client;
 
   Future<Either<HttpError, SearchResult>> search(String query, int page) async {
     var searchUri = Uri.https(_url, _searchPath, {
@@ -24,7 +28,7 @@ class MovieRepositoryImpl implements MovieRepository {
       "include_adult": "false",
     });
 
-    final response = await get(searchUri);
+    final response = await client.get(searchUri);
 
     if (response.statusCode == 200) {
       final json = jsonDecode(response.body);
