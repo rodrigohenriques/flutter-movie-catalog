@@ -16,6 +16,6 @@ abstract class _SearchSuggestionsStore with Store {
 
   @action
   Future<void> fetch(String query) async {
-    this.suggestions = await _repository.fetch(query);
+    this.suggestions = await _repository.fetch(query: query);
   }
 }

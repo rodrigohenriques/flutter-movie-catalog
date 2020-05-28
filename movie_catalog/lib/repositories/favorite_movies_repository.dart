@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
-import 'package:moviecatalog/infra/local_storage.dart';
+import 'package:moviecatalog/infra/key_value_storage.dart';
 import 'package:moviecatalog/model/movie.dart';
 
 abstract class FavoriteMoviesRepository {
@@ -17,7 +17,7 @@ abstract class FavoriteMoviesRepository {
 class FavoriteMoviesRepositoryImpl implements FavoriteMoviesRepository {
   FavoriteMoviesRepositoryImpl(this._storage);
 
-  final Storage _storage;
+  final KeyValueStorage _storage;
 
   @visibleForTesting
   static const KEY = 'favorites';

@@ -1,62 +1,51 @@
 import 'package:dartz/dartz.dart';
-import 'package:localstorage/localstorage.dart';
+import 'package:moviecatalog/infra/key_value_storage.dart';
 
 abstract class RecentSearchesRepository {
-  Future<List<String>> fetch([String query, int limit = 10]);
+  Future<List<String>> fetch({String query, int limit = 10});
 
   Future save(String query);
 }
 
 class RecentSearchesRepositoryImpl implements RecentSearchesRepository {
-  static const SEARCHES = 'searches';
+  RecentSearchesRepositoryImpl(this._storage);
 
-  Future<List<String>> fetch([String query, int limit = 10]) async {
-    final optionalStorage = await _prepareStorage();
+  final KeyValueStorage _storage;
 
-    return optionalStorage
-        .flatMap(_getSearches)
+  static const KEY = 'searches';
+
+  Future<List<String>> fetch({String query, int limit = 10}) async {
+    final searches = await _getSearches();
+
+    return searches
         .map(_sortByMostRecent)
         .map(_filterBy(query))
         .fold(() => [], (items) => items.take(limit).toList());
   }
 
   Future save(String query) async {
-    if (query == null || query.isEmpty) return;
+    var option = await _getSearches();
 
-    final optionalStorage = await _prepareStorage();
+    Map<String, dynamic> searches = option.getOrElse(() => Map());
 
-    optionalStorage.fold(
-      () {},
-      (storage) {
-        Map<String, dynamic> searches =
-            _getSearches(storage).getOrElse(() => Map());
-
-        searches.update(
-          query,
-          (old) => DateTime.now().millisecondsSinceEpoch,
-          ifAbsent: () => DateTime.now().millisecondsSinceEpoch,
-        );
-
-        storage.setItem(SEARCHES, searches);
-      },
+    searches.update(
+      query,
+      (old) => DateTime.now().millisecondsSinceEpoch,
+      ifAbsent: () => DateTime.now().millisecondsSinceEpoch,
     );
+
+    _storage.save(KEY, searches);
   }
 
-  Option<Map<String, dynamic>> _getSearches(LocalStorage storage) {
-    var item = storage.getItem(SEARCHES);
-    return item != null ? Some(item) : None();
+  Future<Option<dynamic>> _getSearches() async {
+    return await _storage.load(KEY);
   }
 
-  List<String> _sortByMostRecent(Map<String, dynamic> data) {
-    var entries = data.entries.toList();
+  List<String> _sortByMostRecent(data) {
+    var map = data as Map;
+    var entries = map.entries.toList();
     entries.sort((a, b) => a.value > b.value ? -1 : 1);
-    return entries.map((e) => e.key).toList();
-  }
-
-  Future<Option<LocalStorage>> _prepareStorage() async {
-    final LocalStorage storage = new LocalStorage('recent_searches.json');
-    final storageReady = await storage.ready;
-    return storageReady ? Some(storage) : None();
+    return entries.map((e) => e.key.toString()).toList();
   }
 
   Function(List<String> items) _filterBy(String query) {

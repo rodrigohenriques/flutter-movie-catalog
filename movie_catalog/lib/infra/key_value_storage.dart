@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:localstorage/localstorage.dart';
 
-abstract class Storage {
+abstract class KeyValueStorage {
   Future<Option<dynamic>> load(String key);
 
-  Future<void> save(String key, data);
+  Future<void> save(String key, value);
 }
 
-class LocalStorageImpl implements Storage {
+class LocalStorageImpl implements KeyValueStorage {
   static final filename = 'local_storage.json';
 
   @override
