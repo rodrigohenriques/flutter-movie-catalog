@@ -25,12 +25,7 @@ void main() {
     test('Search query for page', () async {
       final client = MockClient();
 
-      final searchResult = SearchResult(
-        page: 1,
-        totalPages: 5,
-        totalResults: 100,
-        results: List.generate(20, (index) => generateMovie()),
-      );
+      final searchResult = generateSearchResult();
 
       var json = jsonEncode(searchResult.toJson());
 
