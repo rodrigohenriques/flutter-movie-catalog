@@ -26,7 +26,7 @@ class RecentSearchesRepositoryImpl implements RecentSearchesRepository {
   Future save(String query) async {
     var option = await _getSearches();
 
-    Map<String, dynamic> searches = option.getOrElse(() => Map());
+    Map searches = option.getOrElse(() => Map());
 
     searches.update(
       query,

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart';
 import 'package:mockito/mockito.dart';
-import 'package:moviecatalog/model/search_result.dart';
 import 'package:moviecatalog/repositories/movie_repository.dart';
 
 import '../mocks.dart';
